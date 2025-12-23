@@ -16,6 +16,18 @@ function QuestionDisplay({ question, questionNumber, totalQuestions, selectedEle
   if (!question) {
     return (
       <div style={{ textAlign: 'center', padding: '2rem' }}>
+        {totalQuestions > 0 && (
+          <div style={{
+            marginBottom: '2rem',
+            fontSize: '2.5rem',
+            fontWeight: 'bold',
+            color: '#ffffff',
+            textShadow: '3px 3px 6px rgba(0, 0, 0, 0.5)',
+            opacity: 0.95
+          }}>
+            {questionNumber}/{totalQuestions}
+          </div>
+        )}
         <div style={{ marginBottom: '2rem', opacity: 0.8, fontSize: '1.5rem' }}>
           Quem é mais provável?
         </div>
@@ -26,6 +38,18 @@ function QuestionDisplay({ question, questionNumber, totalQuestions, selectedEle
 
   return (
     <div style={{ textAlign: 'center', padding: '2rem' }}>
+      {totalQuestions > 0 && (
+        <div style={{
+          marginBottom: '2rem',
+          fontSize: '2.5rem',
+          fontWeight: 'bold',
+          color: '#ffffff',
+          textShadow: '3px 3px 6px rgba(0, 0, 0, 0.5)',
+          opacity: 0.95
+        }}>
+          {questionNumber}/{totalQuestions}
+        </div>
+      )}
       <div style={{ marginBottom: '2rem', opacity: 0.8, fontSize: '1.5rem' }}>
         Quem é mais provável?
       </div>

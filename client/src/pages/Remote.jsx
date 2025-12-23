@@ -89,8 +89,10 @@ function Remote() {
 
         <button
           onClick={handleNext}
-          disabled={!connected || state.currentIndex >= state.totalQuestions - 1}
-          className={`${styles.button} ${styles.buttonNext}`}
+          disabled={!connected || state.currentIndex >= state.totalQuestions - 1 || state.selectedElement === null}
+          className={`${styles.button} ${styles.buttonNext} ${
+            state.selectedElement === null && state.currentQuestion ? styles.buttonNextDisabled : ''
+          }`}
         >
           Seguinte →
         </button>

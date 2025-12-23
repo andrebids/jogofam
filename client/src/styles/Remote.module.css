@@ -95,6 +95,11 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
+.buttonNextDisabled {
+  background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%) !important;
+  cursor: not-allowed !important;
+}
+
 .resetSection {
   width: 100%;
   max-width: 600px;
