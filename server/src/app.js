@@ -48,45 +48,34 @@ setupSocketHandlers(io);
 // Função para obter IP da rede local
 function getLocalIP() {
   const interfaces = os.networkInterfaces();
-  for (const name of Object.keys(interfaces)) {
-    for (const iface of interfaces[name]) {
-      // Ignorar endereços internos e não IPv4
-      if (iface.family === 'IPv4' && !iface.internal) {
-        // Priorizar IPs da rede local (192.168.x.x, 10.x.x.x, 172.16-31.x.x)
-        if (
-          iface.address.startsWith('192.168.') ||
-          iface.address.startsWith('10.') ||
-          iface.address.startsWith('172.16.') ||
-          iface.address.startsWith('172.17.') ||
-          iface.address.startsWith('172.18.') ||
-          iface.address.startsWith('172.19.') ||
-          iface.address.startsWith('172.20.') ||
-          iface.address.startsWith('172.21.') ||
-          iface.address.startsWith('172.22.') ||
-          iface.address.startsWith('172.23.') ||
-          iface.address.startsWith('172.24.') ||
-          iface.address.startsWith('172.25.') ||
-          iface.address.startsWith('172.26.') ||
-          iface.address.startsWith('172.27.') ||
-          iface.address.startsWith('172.28.') ||
-          iface.address.startsWith('172.29.') ||
-          iface.address.startsWith('172.30.') ||
-          iface.address.startsWith('172.31.')
-        ) {
-          return iface.address;
-        }
-      }
-    }
-  }
-  // Se não encontrar IP da rede local, retornar o primeiro IPv4 não interno
+  const localIPs = [];
+  
+  // Coletar todos os IPs IPv4 não internos
   for (const name of Object.keys(interfaces)) {
     for (const iface of interfaces[name]) {
       if (iface.family === 'IPv4' && !iface.internal) {
-        return iface.address;
+        localIPs.push(iface.address);
       }
     }
   }
-  return null;
+  
+  if (localIPs.length === 0) return null;
+  
+  // Priorizar IPs da rede privada (RFC 1918)
+  for (const ip of localIPs) {
+    if (
+      ip.startsWith('192.168.') ||
+      ip.startsWith('10.') ||
+      (ip.startsWith('172.') && 
+       parseInt(ip.split('.')[1]) >= 16 && 
+       parseInt(ip.split('.')[1]) <= 31)
+    ) {
+      return ip;
+    }
+  }
+  
+  // Se não encontrar IP privado, retornar o primeiro disponível
+  return localIPs[0];
 }
 
 // Iniciar servidor

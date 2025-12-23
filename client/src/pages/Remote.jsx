@@ -44,7 +44,7 @@ function Remote() {
         <h1>Controle Remoto</h1>
         <div className={styles.questionInfo}>
           <div className={styles.questionNumber}>
-            Pergunta {state.currentIndex + 1} / {state.totalQuestions}
+            Quem é mais provável ?
           </div>
           {state.currentQuestion && (
             <div className={styles.questionPreview}>

@@ -66,17 +66,18 @@ O servidor estará disponível em `http://localhost:3000`
 
 Para aceder a partir de outros dispositivos na mesma rede Wi-Fi:
 
-1. **Descobrir o IP local do computador**:
-   - **Windows**: Abrir PowerShell/CMD e executar `ipconfig`
-   - **Linux/Mac**: Executar `ifconfig` ou `ip addr`
-   - Procurar por "IPv4 Address" ou "inet" (exemplo: `192.168.1.100`)
+1. **Iniciar o servidor**: O IP local é detectado e exibido automaticamente no console quando o servidor inicia.
 
-2. **Aceder às páginas**:
-   - **TV Display**: `http://192.168.1.100:3000/tv`
-   - **Remote**: `http://192.168.1.100:3000/remote`
-   - **Admin**: `http://192.168.1.100:3000/admin`
+2. **Aceder às páginas** usando o IP mostrado no console:
+   - **TV Display**: `http://SEU_IP:3000/tv`
+   - **Remote**: `http://SEU_IP:3000/remote`
+   - **Admin**: `http://SEU_IP:3000/admin`
 
-3. **Nota**: O servidor está configurado para aceitar conexões de qualquer IP na rede local (`0.0.0.0`)
+3. **Nota**: 
+   - O servidor está configurado para aceitar conexões de qualquer IP na rede local (`0.0.0.0`)
+   - Se o IP não for detectado automaticamente, descubra manualmente:
+     - **Windows**: `ipconfig` no PowerShell/CMD
+     - **Linux/Mac**: `ifconfig` ou `ip addr`
 
 ## Estrutura do Projeto
 

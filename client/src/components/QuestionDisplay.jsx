@@ -10,7 +10,7 @@ function QuestionDisplay({ question, questionNumber, totalQuestions }) {
   return (
     <div style={{ textAlign: 'center', padding: '2rem' }}>
       <div style={{ marginBottom: '2rem', opacity: 0.8, fontSize: '1.5rem' }}>
-        Pergunta {questionNumber} / {totalQuestions}
+        Quem é mais provável
       </div>
       <div style={{ 
         fontSize: '4rem', 

@@ -5,7 +5,7 @@ import AudioPlayer from '../components/AudioPlayer';
 import styles from '../styles/TV.module.css';
 
 const YOUTUBE_VIDEO_ID = 'geygTzDFpfE';
-const YOUTUBE_EMBED_URL = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1`;
+const YOUTUBE_EMBED_URL = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1`;
 
 function TV() {
   const { socket, connected, emit } = useSocket();
