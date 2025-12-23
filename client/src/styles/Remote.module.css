@@ -1,0 +1,153 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.header {
+  text-align: center;
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.questionInfo {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  max-width: 600px;
+  width: 100%;
+}
+
+.questionNumber {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+.questionPreview {
+  font-size: 1rem;
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+.controls {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  max-width: 600px;
+  justify-content: center;
+}
+
+.button {
+  flex: 1;
+  padding: 2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  color: white;
+  min-height: 80px;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button:not(:disabled):active {
+  transform: scale(0.95);
+}
+
+.buttonPrev {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.buttonPrev:not(:disabled):hover {
+  background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.buttonNext {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.buttonNext:not(:disabled):hover {
+  background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.revealSection {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+}
+
+.buttonReveal {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  width: 100%;
+}
+
+.buttonReveal:not(:disabled):hover {
+  background: linear-gradient(135deg, #fee140 0%, #fa709a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.buttonReveal.active {
+  background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+}
+
+.connectionStatus {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  color: white;
+  font-size: 1rem;
+  z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .button {
+    font-size: 1.2rem;
+    padding: 1.5rem;
+  }
+}
+

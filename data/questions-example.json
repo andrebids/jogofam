@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "ordem": 1,
+    "pergunta": "Qual é a capital de Portugal?",
+    "resposta": "Lisboa",
+    "categoria": "Geografia",
+    "ativo": true
+  },
+  {
+    "id": 2,
+    "ordem": 2,
+    "pergunta": "Quantos continentes existem no mundo?",
+    "resposta": "7",
+    "categoria": "Geografia",
+    "ativo": true
+  },
+  {
+    "id": 3,
+    "ordem": 3,
+    "pergunta": "Quem pintou a Mona Lisa?",
+    "resposta": "Leonardo da Vinci",
+    "categoria": "Arte",
+    "ativo": true
+  },
+  {
+    "id": 4,
+    "ordem": 4,
+    "pergunta": "Qual é o maior oceano do mundo?",
+    "resposta": "Oceano Pacífico",
+    "categoria": "Geografia",
+    "ativo": true
+  },
+  {
+    "id": 5,
+    "ordem": 5,
+    "pergunta": "Em que ano foi descoberto o Brasil?",
+    "resposta": "1500",
+    "categoria": "História",
+    "ativo": true
+  },
+  {
+    "id": 6,
+    "ordem": 6,
+    "pergunta": "Qual é o planeta mais próximo do Sol?",
+    "resposta": "Mercúrio",
+    "categoria": "Ciência",
+    "ativo": true
+  },
+  {
+    "id": 7,
+    "ordem": 7,
+    "pergunta": "Quantos lados tem um hexágono?",
+    "resposta": "6",
+    "categoria": "Matemática",
+    "ativo": true
+  },
+  {
+    "id": 8,
+    "ordem": 8,
+    "pergunta": "Qual é o maior mamífero do mundo?",
+    "resposta": "Baleia azul",
+    "categoria": "Natureza",
+    "ativo": true
+  },
+  {
+    "id": 9,
+    "ordem": 9,
+    "pergunta": "Quem escreveu 'Os Lusíadas'?",
+    "resposta": "Luís de Camões",
+    "categoria": "Literatura",
+    "ativo": true
+  },
+  {
+    "id": 10,
+    "ordem": 10,
+    "pergunta": "Qual é a fórmula química da água?",
+    "resposta": "H2O",
+    "categoria": "Ciência",
+    "ativo": true
+  }
+]
+
