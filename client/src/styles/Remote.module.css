@@ -95,6 +95,16 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
+.buttonReset {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+}
+
+.buttonReset:not(:disabled):hover {
+  background: linear-gradient(135deg, #ee5a6f 0%, #ff6b6b 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
 .revealSection {
   width: 100%;
   max-width: 600px;

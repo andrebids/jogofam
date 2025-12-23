@@ -130,6 +130,17 @@ export function setupSocketHandlers(io) {
       io.emit('stateSync', newState);
     });
     
+    socket.on('resetGame', () => {
+      // Resetar todas as respostas e scores
+      resetAnswers();
+      
+      // Voltar para a pergunta 1 e limpar elemento selecionado
+      updateConfig({ currentIndex: 0, selectedElement: null });
+      
+      const newState = getCurrentState();
+      io.emit('stateSync', newState);
+    });
+    
     socket.on('debug:populateTestData', () => {
       // Popular dados de teste para debug
       const questions = getQuestions();

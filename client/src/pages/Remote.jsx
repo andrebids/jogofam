@@ -41,6 +41,13 @@ function Remote() {
     emit('selectElement', element);
   };
 
+  const handleReset = () => {
+    if (!connected) return;
+    if (window.confirm('Tem a certeza que deseja fazer reset ao jogo? Todas as respostas e estatísticas serão apagadas.')) {
+      emit('resetGame');
+    }
+  };
+
   return (
     <div className={styles.container}>
       {!connected && (
@@ -78,6 +85,14 @@ function Remote() {
           className={`${styles.button} ${styles.buttonNext}`}
         >
           Seguinte →
+        </button>
+
+        <button
+          onClick={handleReset}
+          disabled={!connected}
+          className={`${styles.button} ${styles.buttonReset}`}
+        >
+          🔄 Reset
         </button>
       </div>
 
