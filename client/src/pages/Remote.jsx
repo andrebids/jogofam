@@ -13,6 +13,7 @@ function Remote() {
     selectedElement: null,
     gameEnded: false
   });
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   useEffect(() => {
     if (!socket) return;
@@ -41,11 +42,18 @@ function Remote() {
     emit('selectElement', element);
   };
 
-  const handleReset = () => {
+  const handleResetClick = () => {
     if (!connected) return;
-    if (window.confirm('Tem a certeza que deseja fazer reset ao jogo? Todas as respostas e estatísticas serão apagadas.')) {
-      emit('resetGame');
-    }
+    setShowResetConfirm(true);
+  };
+
+  const handleResetConfirm = () => {
+    emit('resetGame');
+    setShowResetConfirm(false);
+  };
+
+  const handleResetCancel = () => {
+    setShowResetConfirm(false);
   };
 
   return (
@@ -86,15 +94,47 @@ function Remote() {
         >
           Seguinte →
         </button>
+      </div>
 
+      <div className={styles.resetSection}>
         <button
-          onClick={handleReset}
+          onClick={handleResetClick}
           disabled={!connected}
           className={`${styles.button} ${styles.buttonReset}`}
         >
-          🔄 Reset
+          🔄 Reset Jogo
         </button>
       </div>
+
+      {showResetConfirm && (
+        <div className={styles.modalOverlay} onClick={handleResetCancel}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalHeader}>
+              <h2>⚠️ Confirmar Reset</h2>
+            </div>
+            <div className={styles.modalBody}>
+              <p>Tem a certeza que deseja fazer reset ao jogo?</p>
+              <p className={styles.modalWarning}>
+                Todas as respostas e estatísticas serão apagadas e o jogo voltará para a pergunta 1.
+              </p>
+            </div>
+            <div className={styles.modalActions}>
+              <button
+                onClick={handleResetCancel}
+                className={`${styles.modalButton} ${styles.modalButtonCancel}`}
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleResetConfirm}
+                className={`${styles.modalButton} ${styles.modalButtonConfirm}`}
+              >
+                Confirmar Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {state.currentQuestion && (
         <div className={styles.elementsSection}>

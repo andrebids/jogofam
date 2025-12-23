@@ -1,4 +1,4 @@
-import { getQuestions, getConfig, updateConfig, saveQuestions, saveAnswer, getScores, resetAnswers, getWinner, getAnswers } from '../utils/storage.js';
+import { getQuestions, getConfig, updateConfig, saveConfig, saveQuestions, saveAnswer, getScores, resetAnswers, getWinner, getAnswers, generateRandomQuestionOrder } from '../utils/storage.js';
 
 let ioInstance = null;
 
@@ -120,8 +120,18 @@ export function setupSocketHandlers(io) {
       
       if (!element || questions.length === 0) return;
       
-      // Guardar resposta
-      saveAnswer(config.currentIndex, element);
+      // Validar/inicializar questionOrder se necessário
+      const totalQuestions = questions.length;
+      if (!config.questionOrder || config.questionOrder.length !== totalQuestions) {
+        config.questionOrder = generateRandomQuestionOrder(totalQuestions);
+        saveConfig(config);
+      }
+      
+      // Obter índice real da pergunta atual via questionOrder
+      const realQuestionIndex = config.questionOrder[config.currentIndex];
+      
+      // Guardar resposta usando índice REAL da pergunta
+      saveAnswer(realQuestionIndex, element);
       
       // Atualizar elemento selecionado
       updateConfig({ selectedElement: element });
@@ -134,8 +144,17 @@ export function setupSocketHandlers(io) {
       // Resetar todas as respostas e scores
       resetAnswers();
       
-      // Voltar para a pergunta 1 e limpar elemento selecionado
-      updateConfig({ currentIndex: 0, selectedElement: null });
+      // Gerar nova ordem aleatória das perguntas
+      const questions = getQuestions();
+      const totalQuestions = questions.length;
+      const newQuestionOrder = generateRandomQuestionOrder(totalQuestions);
+      
+      // Voltar para a pergunta 1 e limpar elemento selecionado com nova ordem
+      updateConfig({ 
+        currentIndex: 0, 
+        selectedElement: null,
+        questionOrder: newQuestionOrder
+      });
       
       const newState = getCurrentState();
       io.emit('stateSync', newState);
@@ -149,20 +168,28 @@ export function setupSocketHandlers(io) {
       // Resetar respostas primeiro
       resetAnswers();
       
-      // Criar respostas de teste para algumas perguntas
-      questions.forEach((question, index) => {
-        if (index < Math.min(questions.length, 10)) {
-          const randomElement = elements[Math.floor(Math.random() * elements.length)];
-          saveAnswer(index, randomElement);
-        }
-      });
+      // Garantir que há questionOrder válida
+      const config = getConfig();
+      const totalQuestions = questions.length;
+      if (!config.questionOrder || config.questionOrder.length !== totalQuestions) {
+        config.questionOrder = generateRandomQuestionOrder(totalQuestions);
+        saveConfig(config);
+      }
+      
+      // Criar respostas de teste para algumas perguntas usando índices reais
+      for (let sequenceIndex = 0; sequenceIndex < Math.min(questions.length, 10); sequenceIndex++) {
+        const realQuestionIndex = config.questionOrder[sequenceIndex];
+        const randomElement = elements[Math.floor(Math.random() * elements.length)];
+        saveAnswer(realQuestionIndex, randomElement);
+      }
       
       // Ir para última pergunta e selecionar um elemento
       const lastIndex = questions.length - 1;
       if (lastIndex >= 0) {
         const randomElement = elements[Math.floor(Math.random() * elements.length)];
+        const realQuestionIndex = config.questionOrder[lastIndex];
         updateConfig({ currentIndex: lastIndex, selectedElement: randomElement });
-        saveAnswer(lastIndex, randomElement);
+        saveAnswer(realQuestionIndex, randomElement);
       }
       
       const newState = getCurrentState();
@@ -178,17 +205,32 @@ export function setupSocketHandlers(io) {
 function getCurrentState() {
   const questions = getQuestions();
   const config = getConfig();
-  const currentQuestion = questions[config.currentIndex] || null;
+  const totalQuestions = questions.length;
+  
+  // Validar/inicializar questionOrder se necessário
+  if (!config.questionOrder || config.questionOrder.length !== totalQuestions) {
+    config.questionOrder = generateRandomQuestionOrder(totalQuestions);
+    saveConfig(config);
+  }
+  
+  // Mapear currentIndex para índice real da pergunta
+  const realQuestionIndex = config.questionOrder[config.currentIndex];
+  const currentQuestion = questions[realQuestionIndex] || null;
+  
+  // Detectar se estamos na primeira pergunta da sequência
+  const isFirstQuestion = config.currentIndex === 0;
+  
+  // Obter resposta da pergunta atual - IMPORTANTE: usar índice REAL da pergunta
+  const answersData = getAnswers();
+  const currentAnswerEntry = answersData.answers.find(
+    a => a.questionIndex === realQuestionIndex // Usar realQuestionIndex, não config.currentIndex
+  );
+  const currentAnswer = currentAnswerEntry ? currentAnswerEntry.element : null;
+  
+  // Obter scores (não afetado pela ordem)
   const scores = getScores();
   const isLastQuestion = config.currentIndex >= questions.length - 1;
   const gameEnded = isLastQuestion && config.selectedElement !== null;
-  
-  // Obter resposta da pergunta atual
-  const answersData = getAnswers();
-  const currentAnswerEntry = answersData.answers.find(
-    a => a.questionIndex === config.currentIndex
-  );
-  const currentAnswer = currentAnswerEntry ? currentAnswerEntry.element : null;
   
   return {
     questions,
@@ -199,7 +241,8 @@ function getCurrentState() {
     selectedElement: config.selectedElement || null,
     currentAnswer,
     scores,
-    gameEnded
+    gameEnded,
+    isFirstQuestion // true quando currentIndex === 0 (indica início/reset do jogo)
   };
 }
 

@@ -44,6 +44,22 @@ function writeJSON(filePath, data) {
   }
 }
 
+// Função para embaralhar array (Fisher-Yates shuffle)
+function shuffleArray(array) {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+// Função para gerar ordem aleatória das perguntas
+export function generateRandomQuestionOrder(totalQuestions) {
+  const order = Array.from({ length: totalQuestions }, (_, i) => i);
+  return shuffleArray(order);
+}
+
 // Funções específicas para perguntas
 export function getQuestions() {
   const questions = readJSON(QUESTIONS_FILE, []);
@@ -66,7 +82,8 @@ export function getConfig() {
       track: null,
       volume: 0.5,
       playing: false
-    }
+    },
+    questionOrder: undefined // Campo opcional para ordem aleatória das perguntas
   });
 }
 

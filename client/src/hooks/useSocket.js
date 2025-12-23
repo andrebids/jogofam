@@ -22,9 +22,9 @@ function getSocketUrl() {
     return `http://${hostname}:3000`;
   }
   
-  // Se acessado via localhost, usar caminho relativo para usar o proxy do Vite
+  // Se acessado via localhost, usar localhost:3000 diretamente (mais confiável que proxy)
   if (hostname === 'localhost' || hostname === '127.0.0.1') {
-    return ''; // Caminho relativo usa o proxy do Vite
+    return 'http://localhost:3000';
   }
   
   // Fallback: usar localhost:3000
