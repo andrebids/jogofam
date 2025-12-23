@@ -54,16 +54,20 @@
 }
 
 .questionBox {
-  background: rgba(255, 255, 255, 0.05);
+  /* Fallback sólido para browsers que não suportam backdrop-filter */
+  background: rgba(0, 0, 0, 0.7);
+  /* Glass effect com maior opacidade para melhor visibilidade */
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 2rem;
   padding: 4rem;
   max-width: 90%;
   max-height: 90%;
   box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   color: #ffffff;
   overflow-y: auto;
 }

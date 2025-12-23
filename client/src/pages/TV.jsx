@@ -1,19 +1,23 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSocket } from '../hooks/useSocket';
 import QuestionDisplay from '../components/QuestionDisplay';
 import AudioPlayer from '../components/AudioPlayer';
 import styles from '../styles/TV.module.css';
 
 const YOUTUBE_VIDEO_ID = 'geygTzDFpfE';
-const YOUTUBE_EMBED_URL = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1`;
+const YOUTUBE_EMBED_URL = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&showinfo=0&iv_load_policy=3&fs=0&disablekb=1&cc_load_policy=0&mute=0`;
 
 function TV() {
   const { socket, connected, emit } = useSocket();
+  const navigate = useNavigate();
   const [state, setState] = useState({
     currentQuestion: null,
     currentIndex: 0,
     totalQuestions: 0,
-    audio: { track: null, volume: 0.5, playing: false }
+    audio: { track: null, volume: 0.5, playing: false },
+    selectedElement: null,
+    gameEnded: false
   });
 
   useEffect(() => {
@@ -21,6 +25,13 @@ function TV() {
 
     const handleStateSync = (newState) => {
       setState(newState);
+      
+      // Navegar para página de final quando o jogo terminar
+      if (newState.gameEnded) {
+        setTimeout(() => {
+          navigate('/game-end');
+        }, 2000);
+      }
     };
 
     socket.on('stateSync', handleStateSync);
@@ -28,7 +39,7 @@ function TV() {
     return () => {
       socket.off('stateSync', handleStateSync);
     };
-  }, [socket, emit]);
+  }, [socket, navigate]);
 
   // Garantir que o vídeo inicie automaticamente ao montar o componente
   useEffect(() => {
@@ -70,11 +81,13 @@ function TV() {
       )}
 
       <div className={styles.content}>
+        {/* Sempre mostrar questionBox, mesmo quando não há pergunta */}
         <div className={styles.questionBox}>
           <QuestionDisplay
             question={state.currentQuestion}
             questionNumber={state.currentIndex + 1}
             totalQuestions={state.totalQuestions}
+            selectedElement={state.selectedElement}
           />
         </div>
       </div>

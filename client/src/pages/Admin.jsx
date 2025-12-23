@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSocket } from '../hooks/useSocket';
 import QuestionTable from '../components/QuestionTable';
 import styles from '../styles/Admin.module.css';
 
 function Admin() {
   const { socket, connected, emit } = useSocket();
+  const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
   const [audioFiles, setAudioFiles] = useState([]);
   const [audio, setAudio] = useState({ track: null, volume: 0.5, playing: false });
@@ -308,6 +310,32 @@ function Admin() {
               </button>
             </div>
           </div>
+        </section>
+
+        {/* Seção de Debug */}
+        <section className={styles.section}>
+          <h2>🔧 Debug - Páginas Finais</h2>
+          <div className={styles.actions}>
+            <button
+              onClick={() => {
+                emit('debug:populateTestData');
+                showMessage('success', 'Dados de teste populados! Navegue para as páginas finais.');
+              }}
+              disabled={!connected}
+              className={styles.button}
+            >
+              🎲 Popular Dados de Teste
+            </button>
+            <button
+              onClick={() => navigate('/game-end')}
+              className={styles.button}
+            >
+              📊 Ver Página de Resultados
+            </button>
+          </div>
+          <p className={styles.debugNote}>
+            Use "Popular Dados de Teste" para criar respostas fictícias, depois navegue para as páginas finais para visualizar.
+          </p>
         </section>
       </div>
     </div>

@@ -1,8 +1,11 @@
-function QuestionDisplay({ question, questionNumber, totalQuestions }) {
+function QuestionDisplay({ question, questionNumber, totalQuestions, selectedElement }) {
   if (!question) {
     return (
       <div style={{ textAlign: 'center', padding: '2rem' }}>
-        <p style={{ fontSize: '2rem', opacity: 0.7 }}>Nenhuma pergunta disponível</p>
+        <div style={{ marginBottom: '2rem', opacity: 0.8, fontSize: '1.5rem' }}>
+          Quem é mais provável?
+        </div>
+        <p style={{ fontSize: '2rem', opacity: 0.9, color: '#ffffff' }}>Nenhuma pergunta disponível</p>
       </div>
     );
   }
@@ -10,7 +13,7 @@ function QuestionDisplay({ question, questionNumber, totalQuestions }) {
   return (
     <div style={{ textAlign: 'center', padding: '2rem' }}>
       <div style={{ marginBottom: '2rem', opacity: 0.8, fontSize: '1.5rem' }}>
-        Quem é mais provável
+        Quem é mais provável?
       </div>
       <div style={{ 
         fontSize: '4rem', 
@@ -20,6 +23,38 @@ function QuestionDisplay({ question, questionNumber, totalQuestions }) {
       }}>
         {question.pergunta}
       </div>
+      {selectedElement && (
+        <div style={{
+          marginTop: '3rem',
+          padding: '2rem',
+          background: 'linear-gradient(135deg, rgba(240, 147, 251, 0.3) 0%, rgba(245, 87, 108, 0.3) 100%)',
+          borderRadius: '1rem',
+          border: '3px solid rgba(255, 255, 255, 0.5)',
+          backdropFilter: 'blur(10px)',
+          animation: 'pulse 2s ease-in-out infinite'
+        }}>
+          <div style={{ fontSize: '1.5rem', marginBottom: '1rem', opacity: 0.9 }}>
+            Escolhido:
+          </div>
+          <div style={{ 
+            fontSize: '3rem', 
+            fontWeight: 'bold',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)'
+          }}>
+            {selectedElement}
+          </div>
+        </div>
+      )}
+      <style>{`
+        @keyframes pulse {
+          0%, 100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.02);
+          }
+        }
+      `}</style>
     </div>
   );
 }
