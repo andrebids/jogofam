@@ -4,6 +4,9 @@ import QuestionDisplay from '../components/QuestionDisplay';
 import AudioPlayer from '../components/AudioPlayer';
 import styles from '../styles/TV.module.css';
 
+const YOUTUBE_VIDEO_ID = 'geygTzDFpfE';
+const YOUTUBE_EMBED_URL = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&mute=0&controls=0&modestbranding=1&rel=0&playsinline=1`;
+
 function TV() {
   const { socket, connected, emit } = useSocket();
   const [state, setState] = useState({
@@ -13,17 +16,6 @@ function TV() {
     revealAnswer: false,
     audio: { track: null, volume: 0.5, playing: false }
   });
-  const [audioEnabled, setAudioEnabled] = useState(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
-
-  useEffect(() => {
-    // Verificar se já interagiu antes
-    const saved = localStorage.getItem('audioEnabled');
-    if (saved === 'true') {
-      setAudioEnabled(true);
-      setHasInteracted(true);
-    }
-  }, []);
 
   useEffect(() => {
     if (!socket) return;
@@ -39,17 +31,6 @@ function TV() {
     };
   }, [socket, emit]);
 
-  const handleEnableAudio = () => {
-    setAudioEnabled(true);
-    setHasInteracted(true);
-    localStorage.setItem('audioEnabled', 'true');
-    
-    // Tentar iniciar áudio
-    if (state.audio.track && !state.audio.playing) {
-      emit('audio:playPause');
-    }
-  };
-
   const audioSrc = state.audio.track ? state.audio.track.startsWith('http') 
     ? state.audio.track 
     : `http://${window.location.hostname}:3000${state.audio.track}`
@@ -57,27 +38,17 @@ function TV() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.background}>
-        <div className={styles.bokeh}></div>
-        <div className={styles.bokeh}></div>
-        <div className={styles.bokeh}></div>
-        <div className={styles.lights}>
-          {[...Array(20)].map((_, i) => (
-            <div key={i} className={styles.light} style={{
-              left: `${(i * 5) % 100}%`,
-              animationDelay: `${i * 0.2}s`
-            }}></div>
-          ))}
-        </div>
+      <div className={styles.videoBackground}>
+        <iframe
+          src={YOUTUBE_EMBED_URL}
+          className={styles.youtubeVideo}
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          title="Background Video"
+        />
+        <div className={styles.videoOverlay}></div>
       </div>
-
-      {!hasInteracted && (
-        <div className={styles.audioPrompt}>
-          <button onClick={handleEnableAudio} className={styles.enableAudioBtn}>
-            🔊 Ativar Som
-          </button>
-        </div>
-      )}
 
       {!connected && (
         <div className={styles.connectionStatus}>
@@ -96,7 +67,7 @@ function TV() {
         </div>
       </div>
 
-      {audioEnabled && audioSrc && (
+      {audioSrc && (
         <AudioPlayer
           src={audioSrc}
           volume={state.audio.volume}

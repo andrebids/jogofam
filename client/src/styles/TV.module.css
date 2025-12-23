@@ -8,97 +8,43 @@
   justify-content: center;
 }
 
-.background {
+.videoBackground {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1419 100%);
   z-index: 0;
+  overflow: hidden;
 }
 
-.bokeh {
+.youtubeVideo {
   position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 200, 200, 0.3) 0%, transparent 70%);
-  filter: blur(40px);
-  animation: float 20s infinite ease-in-out;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  min-width: 100%;
+  min-height: 100%;
+  pointer-events: none;
+  border: none;
 }
 
-.bokeh:nth-child(1) {
-  width: 300px;
-  height: 300px;
-  top: 10%;
-  left: 10%;
-  animation-duration: 25s;
-}
-
-.bokeh:nth-child(2) {
-  width: 400px;
-  height: 400px;
-  top: 60%;
-  right: 15%;
-  animation-duration: 30s;
-  background: radial-gradient(circle, rgba(200, 255, 200, 0.2) 0%, transparent 70%);
-}
-
-.bokeh:nth-child(3) {
-  width: 250px;
-  height: 250px;
-  bottom: 20%;
-  left: 30%;
-  animation-duration: 35s;
-  background: radial-gradient(circle, rgba(255, 220, 180, 0.25) 0%, transparent 70%);
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(30px, -30px) scale(1.1);
-  }
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-}
-
-.lights {
+.videoOverlay {
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
 }
 
-.light {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: #ffd700;
-  border-radius: 50%;
-  box-shadow: 
-    0 0 10px #ffd700,
-    0 0 20px #ffd700,
-    0 0 30px rgba(255, 215, 0, 0.5);
-  animation: twinkle 3s infinite;
-  top: 10%;
-}
-
-@keyframes twinkle {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.5);
-  }
-}
 
 .content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   height: 100%;
   display: flex;
@@ -120,31 +66,6 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: #ffffff;
   overflow-y: auto;
-}
-
-.audioPrompt {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  z-index: 10;
-}
-
-.enableAudioBtn {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  padding: 1rem 2rem;
-  border-radius: 1rem;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: bold;
-}
-
-.enableAudioBtn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.05);
 }
 
 .connectionStatus {
