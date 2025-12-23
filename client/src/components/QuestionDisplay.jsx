@@ -1,4 +1,18 @@
-function QuestionDisplay({ question, questionNumber, totalQuestions, selectedElement }) {
+import { useState, useEffect } from 'react';
+
+function QuestionDisplay({ question, questionNumber, totalQuestions, selectedElement, currentAnswer }) {
+  const [displayedAnswer, setDisplayedAnswer] = useState(null);
+
+  // Atualizar resposta exibida quando currentAnswer mudar
+  useEffect(() => {
+    if (currentAnswer) {
+      setDisplayedAnswer(currentAnswer);
+    } else {
+      // Limpar quando mudar de pergunta (currentAnswer é null)
+      setDisplayedAnswer(null);
+    }
+  }, [currentAnswer, questionNumber]);
+
   if (!question) {
     return (
       <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -23,7 +37,7 @@ function QuestionDisplay({ question, questionNumber, totalQuestions, selectedEle
       }}>
         {question.pergunta}
       </div>
-      {selectedElement && (
+      {displayedAnswer && (
         <div style={{
           marginTop: '3rem',
           padding: '2rem',
@@ -34,14 +48,14 @@ function QuestionDisplay({ question, questionNumber, totalQuestions, selectedEle
           animation: 'pulse 2s ease-in-out infinite'
         }}>
           <div style={{ fontSize: '1.5rem', marginBottom: '1rem', opacity: 0.9 }}>
-            Escolhido:
+            Votado:
           </div>
           <div style={{ 
             fontSize: '3rem', 
             fontWeight: 'bold',
             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)'
           }}>
-            {selectedElement}
+            {displayedAnswer}
           </div>
         </div>
       )}

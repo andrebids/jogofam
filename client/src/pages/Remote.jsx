@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSocket } from '../hooks/useSocket';
 import styles from '../styles/Remote.module.css';
 
-const ELEMENTS = ['Noinoi', 'André', 'Linda', 'Pedro', 'Lanita', 'Mom', 'meu querido'];
+const ELEMENTS = ['Noinoi', 'Mauro', 'Linda', 'Pedro', 'Lanita', 'Mom', 'Meu Querido'];
 
 function Remote() {
   const { socket, connected, emit } = useSocket();

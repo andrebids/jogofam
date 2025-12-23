@@ -1,4 +1,4 @@
-import { getQuestions, getConfig, updateConfig, saveQuestions, saveAnswer, getScores, resetAnswers, getWinner } from '../utils/storage.js';
+import { getQuestions, getConfig, updateConfig, saveQuestions, saveAnswer, getScores, resetAnswers, getWinner, getAnswers } from '../utils/storage.js';
 
 let ioInstance = null;
 
@@ -133,7 +133,7 @@ export function setupSocketHandlers(io) {
     socket.on('debug:populateTestData', () => {
       // Popular dados de teste para debug
       const questions = getQuestions();
-      const elements = ['Noinoi', 'André', 'Linda', 'Pedro', 'Lanita', 'Mom', 'meu querido'];
+      const elements = ['Noinoi', 'Mauro', 'Linda', 'Pedro', 'Lanita', 'Mom', 'Meu Querido'];
       
       // Resetar respostas primeiro
       resetAnswers();
@@ -172,6 +172,13 @@ function getCurrentState() {
   const isLastQuestion = config.currentIndex >= questions.length - 1;
   const gameEnded = isLastQuestion && config.selectedElement !== null;
   
+  // Obter resposta da pergunta atual
+  const answersData = getAnswers();
+  const currentAnswerEntry = answersData.answers.find(
+    a => a.questionIndex === config.currentIndex
+  );
+  const currentAnswer = currentAnswerEntry ? currentAnswerEntry.element : null;
+  
   return {
     questions,
     currentIndex: config.currentIndex,
@@ -179,6 +186,7 @@ function getCurrentState() {
     totalQuestions: questions.length,
     audio: config.audio,
     selectedElement: config.selectedElement || null,
+    currentAnswer,
     scores,
     gameEnded
   };

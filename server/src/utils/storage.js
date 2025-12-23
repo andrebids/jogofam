@@ -81,7 +81,7 @@ export function updateConfig(updates) {
 }
 
 // Funções específicas para respostas
-const ELEMENTS = ['Noinoi', 'André', 'Linda', 'Pedro', 'Lanita', 'Mom', 'meu querido'];
+const ELEMENTS = ['Noinoi', 'Mauro', 'Linda', 'Pedro', 'Lanita', 'Mom', 'Meu Querido'];
 
 function getDefaultAnswers() {
   return {
@@ -89,12 +89,12 @@ function getDefaultAnswers() {
     answers: [],
     scores: {
       'Noinoi': 0,
-      'André': 0,
+      'Mauro': 0,
       'Linda': 0,
       'Pedro': 0,
       'Lanita': 0,
       'Mom': 0,
-      'meu querido': 0
+      'Meu Querido': 0
     }
   };
 }

@@ -17,6 +17,7 @@ function TV() {
     totalQuestions: 0,
     audio: { track: null, volume: 0.5, playing: false },
     selectedElement: null,
+    currentAnswer: null,
     gameEnded: false
   });
 
@@ -88,6 +89,7 @@ function TV() {
             questionNumber={state.currentIndex + 1}
             totalQuestions={state.totalQuestions}
             selectedElement={state.selectedElement}
+            currentAnswer={state.currentAnswer}
           />
         </div>
       </div>
