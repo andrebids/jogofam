@@ -1,4 +1,4 @@
-function QuestionDisplay({ question, revealAnswer, questionNumber, totalQuestions }) {
+function QuestionDisplay({ question, questionNumber, totalQuestions }) {
   if (!question) {
     return (
       <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -20,28 +20,6 @@ function QuestionDisplay({ question, revealAnswer, questionNumber, totalQuestion
       }}>
         {question.pergunta}
       </div>
-      {question.categoria && (
-        <div style={{ 
-          fontSize: '1.2rem', 
-          opacity: 0.6,
-          marginBottom: '1rem'
-        }}>
-          {question.categoria}
-        </div>
-      )}
-      {revealAnswer && question.resposta && (
-        <div style={{ 
-          fontSize: '3rem', 
-          marginTop: '3rem',
-          padding: '2rem',
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
-          borderRadius: '1rem',
-          backdropFilter: 'blur(10px)'
-        }}>
-          <div style={{ fontSize: '1.5rem', marginBottom: '1rem', opacity: 0.8 }}>Resposta:</div>
-          <div>{question.resposta}</div>
-        </div>
-      )}
     </div>
   );
 }

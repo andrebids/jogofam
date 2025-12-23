@@ -71,8 +71,6 @@ router.post('/questions', (req, res) => {
       id: q.id || Date.now() + idx,
       ordem: q.ordem !== undefined ? q.ordem : idx + 1,
       pergunta: q.pergunta || '',
-      resposta: q.resposta || '',
-      categoria: q.categoria || '',
       ativo: q.ativo !== false
     }));
     
@@ -95,7 +93,6 @@ router.get('/state', (req, res) => {
       currentIndex: config.currentIndex,
       currentQuestion,
       totalQuestions: questions.length,
-      revealAnswer: config.revealAnswer,
       audio: config.audio
     });
   } catch (error) {
@@ -105,7 +102,7 @@ router.get('/state', (req, res) => {
 
 router.post('/state/reset', (req, res) => {
   try {
-    updateConfig({ currentIndex: 0, revealAnswer: false });
+    updateConfig({ currentIndex: 0 });
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: 'Erro ao resetar estado' });
@@ -164,8 +161,6 @@ router.post('/import', upload.single('file'), (req, res) => {
       id: q.id || Date.now() + idx,
       ordem: q.ordem !== undefined ? q.ordem : idx + 1,
       pergunta: q.pergunta || '',
-      resposta: q.resposta || '',
-      categoria: q.categoria || '',
       ativo: q.ativo !== false
     }));
     

@@ -44,22 +44,12 @@ export function setupSocketHandlers(io) {
       io.emit('stateSync', newState);
     });
     
-    socket.on('toggleReveal', () => {
-      const config = getConfig();
-      updateConfig({ revealAnswer: !config.revealAnswer });
-      
-      const newState = getCurrentState();
-      io.emit('stateSync', newState);
-    });
-    
     socket.on('updateQuestions', (questions) => {
       // Validar e salvar perguntas
       const validQuestions = questions.map((q, idx) => ({
         id: q.id || Date.now() + idx,
         ordem: q.ordem !== undefined ? q.ordem : idx + 1,
         pergunta: q.pergunta || '',
-        resposta: q.resposta || '',
-        categoria: q.categoria || '',
         ativo: q.ativo !== false
       }));
       
@@ -124,7 +114,6 @@ function getCurrentState() {
     currentIndex: config.currentIndex,
     currentQuestion,
     totalQuestions: questions.length,
-    revealAnswer: config.revealAnswer,
     audio: config.audio
   };
 }

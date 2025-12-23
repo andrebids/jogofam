@@ -61,7 +61,6 @@ export function saveQuestions(questions) {
 export function getConfig() {
   return readJSON(CONFIG_FILE, {
     currentIndex: 0,
-    revealAnswer: false,
     audio: {
       track: null,
       volume: 0.5,

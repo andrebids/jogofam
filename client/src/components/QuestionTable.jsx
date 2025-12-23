@@ -22,8 +22,6 @@ function QuestionTable({ questions, onUpdate }) {
       id: Date.now(),
       ordem: localQuestions.length + 1,
       pergunta: '',
-      resposta: '',
-      categoria: '',
       ativo: true
     };
     const updated = [...localQuestions, newQuestion];
@@ -62,8 +60,6 @@ function QuestionTable({ questions, onUpdate }) {
           <tr>
             <th>Ordem</th>
             <th>Pergunta</th>
-            <th>Resposta</th>
-            <th>Categoria</th>
             <th>Ativo</th>
             <th>Ações</th>
           </tr>
@@ -87,24 +83,6 @@ function QuestionTable({ questions, onUpdate }) {
                   onChange={(e) => handleChange(index, 'pergunta', e.target.value)}
                   className={styles.input}
                   placeholder="Digite a pergunta"
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={q.resposta || ''}
-                  onChange={(e) => handleChange(index, 'resposta', e.target.value)}
-                  className={styles.input}
-                  placeholder="Resposta (opcional)"
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={q.categoria || ''}
-                  onChange={(e) => handleChange(index, 'categoria', e.target.value)}
-                  className={styles.input}
-                  placeholder="Categoria (opcional)"
                 />
               </td>
               <td>

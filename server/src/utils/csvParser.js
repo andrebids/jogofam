@@ -19,8 +19,6 @@ export function parseCSV(csvText) {
       id: Date.now() + i,
       ordem: i,
       pergunta: values[0] || '',
-      resposta: values[1] || '',
-      categoria: values[2] || '',
       ativo: true
     };
     
@@ -34,14 +32,12 @@ export function parseCSV(csvText) {
 
 // Gerar CSV a partir de perguntas
 export function generateCSV(questions) {
-  const headers = ['pergunta', 'resposta', 'categoria'];
+  const headers = ['pergunta'];
   const lines = [headers.join(',')];
   
   questions.forEach(q => {
     const row = [
-      `"${(q.pergunta || '').replace(/"/g, '""')}"`,
-      `"${(q.resposta || '').replace(/"/g, '""')}"`,
-      `"${(q.categoria || '').replace(/"/g, '""')}"`
+      `"${(q.pergunta || '').replace(/"/g, '""')}"`
     ];
     lines.push(row.join(','));
   });

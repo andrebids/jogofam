@@ -7,8 +7,7 @@ function Remote() {
   const [state, setState] = useState({
     currentQuestion: null,
     currentIndex: 0,
-    totalQuestions: 0,
-    revealAnswer: false
+    totalQuestions: 0
   });
 
   useEffect(() => {
@@ -31,10 +30,6 @@ function Remote() {
 
   const handlePrev = () => {
     emit('prevQuestion');
-  };
-
-  const handleToggleReveal = () => {
-    emit('toggleReveal');
   };
 
   return (
@@ -74,16 +69,6 @@ function Remote() {
           className={`${styles.button} ${styles.buttonNext}`}
         >
           Seguinte →
-        </button>
-      </div>
-
-      <div className={styles.revealSection}>
-        <button
-          onClick={handleToggleReveal}
-          disabled={!connected || !state.currentQuestion?.resposta}
-          className={`${styles.button} ${styles.buttonReveal} ${state.revealAnswer ? styles.active : ''}`}
-        >
-          {state.revealAnswer ? '👁️ Ocultar' : '👁️ Revelar'} Resposta
         </button>
       </div>
     </div>
